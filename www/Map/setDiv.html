@@ -46,48 +46,26 @@ map.one(plugin.google.maps.event.MAP_READY, function() {
         </section>
 
         <section class="demo">
-            <div class="map" id="map_canvas_a" style="display: block;">
-                <strong>canvan A</strong><br/>
-                <span class="smallPanel"><button>Toggle Map (OK)</button></span>
-                <span class="smallPanel"><button>Toggle Map (NOK)</button></span>
-            </div>
-            <div class="map" id="map_canvas_b" style="display: none;">
-                <strong>canvan B</strong><br/>
-                <span class="smallPanel"><button>Toggle Map (OK)</button></span>
-                <span class="smallPanel"><button>Toggle Map (NOK)</button></span>
+            <div class="map" id="map_canvas_offscreen">
+                <span class="smallPanel"><button>Map On</button></span>
+                <span class="smallPanel"><button>Map Off</button></span>
             </div>
 
-<pre class="prettyprint">var divA = document.getElementById("map_canvas_a");
-var divB = document.getElementById("map_canvas_b");
-var map = plugin.google.maps.Map.getMap(divA);
+<pre class="prettyprint">var div = document.getElementById("map_canvas_offscreen");
+var offscreen = document.createElement('div');
+offscreen.style.width = div.style.width;
+offscreen.style.height = div.style.height;
+
+var map = plugin.google.maps.Map.getMap(div);
 map.one(plugin.google.maps.event.MAP_READY, function() {
 
-  var buttonA0 = divA.getElementsByTagName('button')[0];
+  var buttonA0 = div.getElementsByTagName('button')[0];
   buttonA0.addEventListener('click', function() {
-    map.setDiv(divB);
-    divA.style.display = "none"
-    divB.style.display = "block";
+    map.setDiv(div)
   });
-  var buttonA1 = divA.getElementsByTagName('button')[1];
+  var buttonA1 = div.getElementsByTagName('button')[1];
   buttonA1.addEventListener('click', function() {
-    map.setDiv()
-    map.setDiv(divB)
-    divA.style.display = "none"
-    divB.style.display = "block";
-  });
-
-  var buttonB0 = divB.getElementsByTagName('button')[0];
-  buttonB0.addEventListener('click', function() {
-    map.setDiv(divA)
-    divB.style.display = "none"
-    divA.style.display = "block";    
-  });
-  var buttonB1 = divB.getElementsByTagName('button')[1];
-  buttonB1.addEventListener('click', function() {
-    map.setDiv()
-    map.setDiv(divA)
-    divB.style.display = "none"
-    divA.style.display = "block";    
+    map.setDiv(offscreen)
   });
 
 });
